@@ -33,14 +33,26 @@ class Hangman {
     public void drawHangman() {
         System.out.println(" __________");
         System.out.println(" |         |");
-        System.out.println(" |         " + ((tries == 1) ? "O" : " "));
-        System.out.println(" |         " + ((tries == 2) ? "\\/" : " "));
-        System.out.println(" |         " + ((tries == 3) ? "|" : " "));
-        System.out.println(" |         " + ((tries == 4) ? "/\\" : " "));
+        System.out.println(" |         " + ((tries >= 1) ? "O" : " "));
+        System.out.println(" |         " + ((tries >= 2) ? "\\/" : " "));
+        System.out.println(" |         " + ((tries >= 3) ? "|" : " "));
+        System.out.println(" |         " + ((tries >= 4) ? "/\\" : " "));
         System.out.println(" |");
         System.out.println("---------------");
         System.out.println();
 
+    }
+
+    /**
+     * after user has incorrectly guessed
+     * the word and game is over
+     */
+    public boolean isOver() {
+        if(tries == 4){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -59,7 +71,8 @@ class Hangman {
      * @return
      */
     public String randomWord() {
-        return wordList[rand.nextInt(wordList.length)];
+        // return wordList[rand.nextInt(wordList.length)];
+        return "cat";
     }
 
     /**

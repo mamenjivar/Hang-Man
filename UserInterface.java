@@ -27,6 +27,20 @@ class UserInterface {
     }
 
     /**
+     * when user guesses letter correctly
+     */
+    public void correctGuessLetter(){
+        System.out.println("YOU GUESSED CORRECT LETTER!");
+    }
+
+    /**
+     * when user incorrectly guesses letter
+     */
+    public void incorrectGuessLetter() {
+        System.out.println("WRONG LETTER, PLEASE TRY AGAIN");
+    }
+
+    /**
      * Choose a letter for the game word
      */
     public void chooseALetter() {
@@ -40,6 +54,21 @@ class UserInterface {
      */
     public void mainMenuLetterError() {
         System.out.println("Please enter a NUMBER not a LETTER...");
+    }
+
+    /**
+     * When the user incorrectly guesses word
+     * and ran out of tries
+     */
+    public void gameover() {
+        System.out.println("Game Over, ran out of tries...");
+    }
+
+    /**
+     * will compute list of all wrong letters in list
+     */
+    public void wrongLetterList() {
+        System.out.print("Wrong Letters: ");
     }
 
     /**

@@ -9,6 +9,7 @@
  */
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 class GameEngine{
     UserInterface ui;
@@ -19,9 +20,11 @@ class GameEngine{
     String[] splitWord;
     String[] rebuildWord;
     Boolean[] ifLetterExists;
+    ArrayList<String> wrongLetters;
 
     String gameWord;
     String guessLetter;
+    Boolean isLetterCorrect;
 
     /**
      * Constructor
@@ -32,8 +35,10 @@ class GameEngine{
 
         kb = new Scanner(System.in);
 
+        isLetterCorrect = false;
         gameWord = "";
         guessLetter = "";
+        wrongLetters = new ArrayList<String>();
     }
 
     /**
@@ -56,19 +61,37 @@ class GameEngine{
             hm.drawHangman();
             // will print blank lines and spaces to signify number of characters
             // in word that needs to be guessed
-            for(int i = 0; i < hm.randomWordSize(); i++){
-
-                System.out.print("_ ");
+            for(int i = 0; i < rebuildWord.length; i++){
+                if(rebuildWord[i] != null){
+                    System.out.print(rebuildWord[i]);
+                } else {
+                    System.out.print("_ ");
+                }
             }
+            System.out.println();
+
+            ui.wrongLetterList();
+            for(String i : wrongLetters){
+                System.out.print(i + ", ");    
+            }
+            System.out.println();
 
             takeAGuess();
 
-            loop = false;
+            if(hm.isOver()){
+                ui.gameover();
+                exit();
+            }
         }
     }
 
+    /**
+     * setting up the game
+     * as in splitting words and empty arrays
+     */
     public void settingUp() {
-        gameWord = hm.getRandomWord();
+        gameWord = hm.randomWord();
+        // System.out.println("this is word: " + gameWord);
         splitWord = new String[gameWord.length()];
         splitWord = gameWord.split("(?!^)");
 
@@ -87,12 +110,23 @@ class GameEngine{
     public void takeAGuess(){
         ui.chooseALetter();
         guessLetter = kb.nextLine();
+        isLetterCorrect = false;
 
         for(int i = 0; i < gameWord.length(); i++){
             if(splitWord[i].equals(guessLetter)){
                 // ifLetterExists[i] = true; 
                 rebuildWord[i] = splitWord[i]; // adds letter to guessing word
-            }
+                isLetterCorrect = true;
+                break;
+            } 
+        }
+
+        if(isLetterCorrect) {
+            ui.correctGuessLetter();
+        } else {
+            wrongLetters.add(guessLetter);
+            ui.incorrectGuessLetter();
+            hm.incrementTries();
         }
     }
 
@@ -109,10 +143,12 @@ class GameEngine{
             try {
                 mainMenuChoice = kb.nextInt();
                 System.out.println();
+                kb.nextLine();
 
             } catch (InputMismatchException e) {
                 System.out.println(e);
                 ui.mainMenuLetterError();
+                kb.nextLine();
             }
 
            switch(mainMenuChoice){
