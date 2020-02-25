@@ -8,5 +8,17 @@
  * This is where the hangman logic will occur
  */
 class Hangman {
-    
+    public void drawEmptyHangman() {
+        System.out.println(" __________");
+        System.out.println(" |         |");
+        System.out.println(" |");
+        System.out.println(" |");
+        System.out.println(" |");
+        System.out.println(" |");
+        System.out.println(" |");
+        System.out.println("---------------");
+        System.out.println();
+
+
+    }
 }
