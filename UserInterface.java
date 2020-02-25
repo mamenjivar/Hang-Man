@@ -19,8 +19,19 @@ class UserInterface {
                         + ">> ");
     }
 
+    /**
+     * title of the game
+     */
     public void title() {
         System.out.println("Hangman\n");
+    }
+
+    /**
+     * Choose a letter for the game word
+     */
+    public void chooseALetter() {
+        System.out.print("Choose a letter: \n"
+                        +">> ");
     }
 
     /**

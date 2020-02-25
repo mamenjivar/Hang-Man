@@ -16,6 +16,13 @@ class GameEngine{
 
     Scanner kb;
 
+    String[] splitWord;
+    String[] rebuildWord;
+    Boolean[] ifLetterExists;
+
+    String gameWord;
+    String guessLetter;
+
     /**
      * Constructor
      */
@@ -24,6 +31,9 @@ class GameEngine{
         hm = new Hangman();
 
         kb = new Scanner(System.in);
+
+        gameWord = "";
+        guessLetter = "";
     }
 
     /**
@@ -39,7 +49,51 @@ class GameEngine{
      * Commences game
      */
     public void playGame(){
-        hm.drawEmptyHangman();
+        settingUp();
+
+        boolean loop = true;
+        while(loop){
+            hm.drawHangman();
+            // will print blank lines and spaces to signify number of characters
+            // in word that needs to be guessed
+            for(int i = 0; i < hm.randomWordSize(); i++){
+
+                System.out.print("_ ");
+            }
+
+            takeAGuess();
+
+            loop = false;
+        }
+    }
+
+    public void settingUp() {
+        gameWord = hm.getRandomWord();
+        splitWord = new String[gameWord.length()];
+        splitWord = gameWord.split("(?!^)");
+
+        ifLetterExists = new Boolean[gameWord.length()];
+        rebuildWord = new String[gameWord.length()];
+
+        // sets array to false to signify if right or wrong choices
+        for(int i = 0; i < ifLetterExists.length; i++){
+            ifLetterExists[i] = false;
+        }
+    }
+
+    /**
+     * prompts user to guess a letter
+     */
+    public void takeAGuess(){
+        ui.chooseALetter();
+        guessLetter = kb.nextLine();
+
+        for(int i = 0; i < gameWord.length(); i++){
+            if(splitWord[i].equals(guessLetter)){
+                // ifLetterExists[i] = true; 
+                rebuildWord[i] = splitWord[i]; // adds letter to guessing word
+            }
+        }
     }
 
     /**
