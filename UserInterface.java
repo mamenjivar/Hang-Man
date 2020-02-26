@@ -41,6 +41,13 @@ class UserInterface {
     }
 
     /**
+     * when user successfully guessed the correct word
+     */
+    public void gameWon(){
+        System.out.println("WORD GUESSED CORRECTLY! YOU HAVE WON!");
+    }
+
+    /**
      * Choose a letter for the game word
      */
     public void chooseALetter() {

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 class GameEngine{
     UserInterface ui;
+    StringBuffer sb;
     Hangman hm;
 
     Scanner kb;
@@ -26,6 +27,9 @@ class GameEngine{
     String guessLetter;
     Boolean isLetterCorrect;
 
+    int count; // tracks correct letters
+
+
     /**
      * Constructor
      */
@@ -35,9 +39,11 @@ class GameEngine{
 
         kb = new Scanner(System.in);
 
+        count = 0;
         isLetterCorrect = false;
         gameWord = "";
         guessLetter = "";
+
         wrongLetters = new ArrayList<String>();
     }
 
@@ -78,8 +84,14 @@ class GameEngine{
 
             takeAGuess();
 
+            if(hm.isWordCorrect(count)){
+                ui.gameWon();
+                exit();
+            }
+
             if(hm.isOver()){
                 ui.gameover();
+                System.out.println("The word is: " + hm.getRandomWord());
                 exit();
             }
         }
@@ -114,10 +126,11 @@ class GameEngine{
 
         for(int i = 0; i < gameWord.length(); i++){
             if(splitWord[i].equals(guessLetter)){
+                count++;
                 // ifLetterExists[i] = true; 
                 rebuildWord[i] = splitWord[i]; // adds letter to guessing word
                 isLetterCorrect = true;
-                break;
+                // break;
             } 
         }
 

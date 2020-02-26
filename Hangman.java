@@ -10,10 +10,11 @@
 import java.util.Random;
 class Hangman {
     // words to be used for hangman game
-    private String[] wordList = {"Developer", "Pillow", "Cart", "Bullet", "Stool", "Spray", "Door", "Octopus"};
+    private String[] wordList = {"developer", "pillow", "cart", "bullet", "stool", "spray", "door", "octopus"};
 
     private int tries; // will keep track of how many tries it takes to solve word
     private String randomWord; // will get current random word
+    private int count;
 
     Random rand; // to randomize the different values to choose from within array
 
@@ -23,6 +24,7 @@ class Hangman {
     Hangman() {
         randomWord = "";
         tries = 0;
+        count = 0;
         rand = new Random();
     }
 
@@ -71,8 +73,28 @@ class Hangman {
      * @return
      */
     public String randomWord() {
+        randomWord = wordList[rand.nextInt(wordList.length)];
         // return wordList[rand.nextInt(wordList.length)];
-        return "cat";
+        setRandomWord(randomWord);
+        count = randomWord.length();
+        // count = "cat".length();
+        // return "cat";
+        return randomWord;
+
+    }
+
+    /**
+     * checks if answer is correct
+     * 
+     * @param counts
+     * @return
+     */
+    public boolean isWordCorrect(int counts) {
+        if(count == counts){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
