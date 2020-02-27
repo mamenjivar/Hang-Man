@@ -14,7 +14,7 @@ class Hangman {
 
     private int tries; // will keep track of how many tries it takes to solve word
     private String randomWord; // will get current random word
-    private int count;
+    private int count; // keeps track of result word
 
     Random rand; // to randomize the different values to choose from within array
 

@@ -36,15 +36,13 @@ class GameEngine{
     GameEngine() {
         ui = new UserInterface();
         hm = new Hangman();
-
         kb = new Scanner(System.in);
+        wrongLetters = new ArrayList<String>();
 
         count = 0;
         isLetterCorrect = false;
         gameWord = "";
         guessLetter = "";
-
-        wrongLetters = new ArrayList<String>();
     }
 
     /**
@@ -65,37 +63,57 @@ class GameEngine{
         boolean loop = true;
         while(loop){
             hm.drawHangman();
-            // will print blank lines and spaces to signify number of characters
-            // in word that needs to be guessed
-            for(int i = 0; i < rebuildWord.length; i++){
-                if(rebuildWord[i] != null){
-                    System.out.print(rebuildWord[i]);
-                } else {
-                    System.out.print("_ ");
-                }
-            }
-            System.out.println();
 
-            ui.wrongLetterList();
-            for(String i : wrongLetters){
-                System.out.print(i + ", ");    
-            }
-            System.out.println();
+            rebuildWord();
 
             takeAGuess();
 
-            if(hm.isWordCorrect(count)){
-                ui.gameWon();
-                exit();
-            }
-
-            if(hm.isOver()){
-                ui.gameover();
-                System.out.println("The word is: " + hm.getRandomWord());
-                exit();
-            }
+            isItOver();
         }
     }
+
+    /**
+     * Checks if the game is over
+     * if user ran out of tries,
+     * or user won the game
+     */
+    public void isItOver() {
+        if (hm.isWordCorrect(count)) {
+            ui.gameWon();
+            exit();
+        }
+
+        if (hm.isOver()) {
+            ui.gameover();
+            ui.theWordIs(hm.getRandomWord());
+            exit();
+        }
+    }
+
+    /**
+     * prints out the wrong letters that were given by
+     * user to have as reference
+     */
+    public void wrongLetterList() {
+        ui.wrongLetterList(wrongLetters);
+    }
+
+    /**
+     * Will print the empty spaces or
+     * letters in the word
+     */
+    public void rebuildWord(){
+        for (int i = 0; i < rebuildWord.length; i++) {
+            if (rebuildWord[i] != null) {
+                System.out.print(rebuildWord[i]);
+            } else {
+                System.out.print("_ ");
+            }
+        }
+        System.out.println();
+    }
+
+
 
     /**
      * setting up the game
@@ -103,7 +121,6 @@ class GameEngine{
      */
     public void settingUp() {
         gameWord = hm.randomWord();
-        // System.out.println("this is word: " + gameWord);
         splitWord = new String[gameWord.length()];
         splitWord = gameWord.split("(?!^)");
 
@@ -127,10 +144,8 @@ class GameEngine{
         for(int i = 0; i < gameWord.length(); i++){
             if(splitWord[i].equals(guessLetter)){
                 count++;
-                // ifLetterExists[i] = true; 
                 rebuildWord[i] = splitWord[i]; // adds letter to guessing word
                 isLetterCorrect = true;
-                // break;
             } 
         }
 

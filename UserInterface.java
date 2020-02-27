@@ -7,6 +7,8 @@
  * UserInterface.java 
  * This is where the logic of the game to be handled
  */
+import java.util.ArrayList;
+
 class UserInterface {
 
     /**
@@ -38,6 +40,14 @@ class UserInterface {
      */
     public void incorrectGuessLetter() {
         System.out.println("WRONG LETTER, PLEASE TRY AGAIN");
+    }
+
+    /**
+     * when the game is over and it reveals
+     * what the correct word was
+     */
+    public void theWordIs(String word){
+        System.out.println("The word is: " + word);
     }
 
     /**
@@ -74,8 +84,13 @@ class UserInterface {
     /**
      * will compute list of all wrong letters in list
      */
-    public void wrongLetterList() {
+    public void wrongLetterList(ArrayList<String> wrongLetters) {
         System.out.print("Wrong Letters: ");
+        for(String i : wrongLetters) {
+            System.out.println(i + ", ");
+        }
+        System.out.println();
+
     }
 
     /**
